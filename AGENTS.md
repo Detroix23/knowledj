@@ -2,6 +2,12 @@
 
 Instructions for AI agents.
 
+## Coding style.
+
+The following must absolutely be respected: 
+- all code shall be documented (_e.g_: with docstrings, `///` for Rust functions, `//!` for Rust files, `/** ... */` for JS);
+- all functions shall be 
+
 ## Overview
 
 **Knowledj** is a desktop flashcard study app built with **Tauri v2 + React 19 + TypeScript** (Vite 8, strict TS). It has two purposes:
@@ -33,8 +39,8 @@ Cards are stored in a single readable JSON file, hand-editable:
       "id": "uuid",
       "title": "Photosynthesis",
       "body": "Process by which plants convert light into energy.",
-      "createdAt": "2026-10-20T12:00:00Z",
-      "updatedAt": "2026-10-20T12:00:00Z"
+      "dateCreated": "2026-10-20T12:00:00Z",
+      "dateUpdated": "2026-10-20T12:00:00Z"
     }
   ]
 }
@@ -44,7 +50,7 @@ Cards are stored in a single readable JSON file, hand-editable:
 - `title` — the question/prompt shown first in a quiz.
 - `body` — the answer revealed after the prompt.
 - `id` — UUID generated on creation.
-- `createdAt` / `updatedAt` — ISO-8601 UTC timestamps; `updatedAt` is refreshed on every edit.
+- `dateCreated` / `dateUpdated` — ISO-8601 UTC timestamps; `dateUpdated` is refreshed on every edit.
 
 ## Persistence
 
