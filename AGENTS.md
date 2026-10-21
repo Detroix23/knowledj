@@ -5,8 +5,14 @@ Instructions for AI agents.
 ## Coding style.
 
 The following must absolutely be respected: 
-- all code shall be documented (_e.g_: with docstrings, `///` for Rust functions, `//!` for Rust files, `/** ... */` for JS);
-- all functions shall be 
+- all functions, classes, files shall be documented. _E.g_: 
+  - with docstrings;
+  - `///` for Rust functions; 
+  - `//!` for Rust files;
+  - `/** ... */` for JS and TS functions;
+  - `/* ... */` for JS and TS general comments;
+  - still, remain concise and do not overdo;
+- all functions shall do one and one thing : divide in multiple sub-functions if necessary;
 
 ## Overview
 
@@ -24,6 +30,7 @@ The two modes are split into tabs in a left sidebar. Styling is intentionally mi
 | `npm run tauri dev` | Launch the app in dev mode (starts Vite on port 1420 + builds Rust). |
 | `npm run build` | Type-checks with `tsc` then bundles with Vite. Must pass before considering work done. |
 | `npm run preview` | Preview the frontend bundle only. |
+| `npm run lint ` | Sanity-checks with ESLint. Warns and errors should not be ignored. |
 
 Rust code lives in `src-tauri/` (edition 2024). `serde` and `serde_json` are already dependencies. After Rust changes, `npm run tauri dev` rebuilds it.
 
