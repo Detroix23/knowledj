@@ -2,17 +2,6 @@
 
 Instructions for AI agents.
 
-## Coding style.
-
-The following must absolutely be respected: 
-- all functions, classes, files shall be documented. _E.g_: 
-  - with docstrings;
-  - `///` for Rust functions; 
-  - `//!` for Rust files;
-  - `/** ... */` for JS and TS functions;
-  - `/* ... */` for JS and TS general comments;
-  - still, remain concise and do not overdo;
-- all functions shall do one and one thing : divide in multiple sub-functions if necessary;
 
 ## Overview
 
@@ -30,7 +19,7 @@ The two modes are split into tabs in a left sidebar. Styling is intentionally mi
 | `npm run tauri dev` | Launch the app in dev mode (starts Vite on port 1420 + builds Rust). |
 | `npm run build` | Type-checks with `tsc` then bundles with Vite. Must pass before considering work done. |
 | `npm run preview` | Preview the frontend bundle only. |
-| `npm run lint ` | Sanity-checks with ESLint. Warns and errors should not be ignored. |
+| `npm run lint` | Sanity-checks with ESLint. Warns and errors should not be ignored. |
 
 Rust code lives in `src-tauri/` (edition 2024). `serde` and `serde_json` are already dependencies. After Rust changes, `npm run tauri dev` rebuilds it.
 
@@ -63,8 +52,8 @@ Cards are stored in a single readable JSON file, hand-editable:
 
 The JSON file lives in Tauri's app data directory (platform-specific, e.g. `~/.local/share/com.detroix23.knowledj/knowledj/knowledge.json` on Linux). The frontend **never** touches the filesystem directly; all I/O goes through Rust commands:
 
-- `load_knowledge` — read and return the file, creating a valid empty file (`{ "version": 1, "cards": [] }`) if it does not exist yet.
-- `save_knowledge` — write the whole file back (pretty-printed JSON, readable).
+- `knowledge_load` — read and return the file, creating a valid empty file (`{ "version": 1, "cards": [] }`) if it does not exist yet.
+- `knowledge_save` — write the whole file back (pretty-printed JSON, readable).
 
 The frontend holds the full card list in a `KnowledgeContext` loaded once at startup; edits update context state and persist via `save_knowledge`.
 
@@ -72,6 +61,8 @@ The frontend holds the full card list in a `KnowledgeContext` loaded once at sta
 
 ```
 src/
+├── lib
+│   └── knowledge.ts      # Tauri `invoke` bindings.
 ├── main.tsx              # React root (StrictMode)
 ├── App.tsx               # holds activeTab: 'edit' | 'train', renders sidebar
 ├── App.css               # global styles (replace template boilerplate)
@@ -89,17 +80,25 @@ src/
 
 ## Rules
 
-- TypeScript strict mode: no `any`, no unchecked casts.
+- If stuck (building, thinking, coding), stop and report. Do not hallucinate, and divide tasks. 
 - **Run `npm run build` and make sure it passes** after your changes.
 - Do **not** add dependencies (npm or Cargo) without asking first.
 - Keep CSS minimal and plain (one global CSS file per component/tab area). No CSS frameworks, no styled-components.
 - UI strings, comments, and docs are in English.
 - Respect Tauri v2 conventions: capabilities in `src-tauri/capabilities/default.json`; new plugins require updating permissions.
 - Keep `knowledge.json` human-readable: pretty-printed, stable field order.
+- TypeScript strict mode: no `any`, no unchecked casts.
+- All functions, classes, files shall be documented. _E.g_.
+  - with docstrings;
+  - `///` for Rust functions; 
+  - `//!` for Rust files;
+  - `/** ... */` for JS and TS functions;
+  - `/* ... */` for JS and TS general comments;
+  - still, remain concise and do not overdo;
+- All functions shall do one and one thing : divide in multiple sub-functions if necessary.
 
 ## Future work (do not build unless asked)
 
 - **Lesson/grouping**: add a grouping field to cards and let the quiz picker filter by it (schema bump + picker options).
 - **Richer card fields**: tags, hints, SRS scheduling (ease/interval/due).
 - **More quiz formats**: multiple choice, typed answers.
-- **ESLint**: not set up yet.

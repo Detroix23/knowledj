@@ -1,0 +1,14 @@
+/*!
+ * # Knowledj frontend.
+ * src/ModeSelector.module.css 
+ */
+
+.mainModeSelector {
+  display: flex;
+  border: 2px solid #ff0000;
+
+  flex-direction: column;
+
+  grid-row: 1 / 4;
+  grid-column: 1 / 2;
+}
