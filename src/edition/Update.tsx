@@ -15,7 +15,9 @@ export const Update = ({ card, handleClose }: {
   return (
     <HoverPane handleClose={handleClose}>
       <div className={styles.updateMain}>
-        <h1>{card.title}</h1>
+        <button onClick={handleClose}> X </button>
+        <h1>Update card.</h1>
+        <h2>{card.title}</h2>
       </div>
     </HoverPane>
   );

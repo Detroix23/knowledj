@@ -28,13 +28,14 @@ export const AddCardButton = () => {
 const AddCardMenu = ({ setMenuVisibility }: {
   setMenuVisibility: React.Dispatch<React.SetStateAction<boolean>>,
 }) => {  
-  const handleClose = () => {
-    setMenuVisibility(false);
-  }
+  const handleClose = () => setMenuVisibility(false);
 
   return (
     <HoverPane handleClose={handleClose}>
-      <button onClick={handleClose}> X </button>
+      <div className={styles.addCardMenu}>
+        <button onClick={handleClose}> X </button>
+        <h1>Create card.</h1>
+      </div>
     </HoverPane>         
   );
 }

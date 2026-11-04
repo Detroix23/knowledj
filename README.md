@@ -16,6 +16,11 @@ Scroll through and edit the cards.
 
 Train thanks to randomly selected question on filtered subjects.
 
+## Data.
+
+All cards are stored in a human-readable JSON file called `knowledge.json`.
+
+Often located in `~/.local/share/com.detroix23.knowledj/knowledge.json`.
 
 ## Development.
 
