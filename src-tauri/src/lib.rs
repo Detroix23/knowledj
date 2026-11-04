@@ -15,7 +15,7 @@ struct Card {
     title: String,
     body: String,
     date_created: String,
-    date_updated: String, 
+    date_updated: String,
 }
 
 /// # `Knowledge` object.
@@ -29,20 +29,25 @@ struct KnowledgeFile {
 /// Helper function to get the `knowledge.json` file path.
 fn knowledge_path(app: &AppHandle) -> Result<path::PathBuf, String> {
     let directory: path::PathBuf = app
-        .path().app_data_dir()
+        .path()
+        .app_data_dir()
         .map_err(|error| error.to_string())?;
-    Ok(directory.join("knowledge.json")) 
+    Ok(directory.join("knowledge.json"))
 }
-   
+
 /// Executed on first run: create a valid, human-readable file immediately.
 fn knowledge_create_empty(file_path: &path::PathBuf) -> Result<KnowledgeFile, String> {
     eprintln!("(?) {}:{} knowledge_create_empty() ran.", file!(), line!());
 
-    let empty = KnowledgeFile { version: 1, cards: vec![] };
+    let empty = KnowledgeFile {
+        version: 1,
+        cards: vec![],
+    };
     fs::write(
-        file_path, 
+        file_path,
         serde_json::to_string_pretty(&empty).map_err(|e| e.to_string())?,
-    ).map_err(|e| e.to_string())?;
+    )
+    .map_err(|e| e.to_string())?;
     Ok(empty)
 }
 
@@ -51,7 +56,9 @@ fn knowledge_create_empty(file_path: &path::PathBuf) -> Result<KnowledgeFile, St
 fn knowledge_load(app: AppHandle) -> Result<KnowledgeFile, String> {
     eprintln!("(?) {}:{} knowledge_load() ran.", file!(), line!());
 
+
     let path: path::PathBuf = knowledge_path(&app)?;
+    println!("- {}", path.display());
     if !path.exists() {
         knowledge_create_empty(&path)?;
     }

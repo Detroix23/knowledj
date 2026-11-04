@@ -17,9 +17,19 @@ Scroll through and edit the cards.
 Train thanks to randomly selected question on filtered subjects.
 
 
-## Building.
+## Development.
 
-In development, run : 
+To initialize the project, type :
+```sh
+npm install
+```
+
+Check build pass :
+```sh
+npm run build
+```
+
+Run in development : 
 ```sh
 npm run tauri dev
 ```

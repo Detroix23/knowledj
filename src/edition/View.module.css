@@ -1,0 +1,42 @@
+
+.editorCardTitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.editorCardBody {
+  margin-bottom: 10px;
+}
+
+.editorCardDates {
+  align-self: flex-end;
+}
+
+.editorCardPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 150px;
+  width: 140px;
+
+  padding: 4px;
+  margin: 10px;
+  border-radius: 4px;
+  box-shadow: 
+    0 4px 5px lightblue, 
+    4px 0 5px lightblue, 
+    0 -4px 5px lightblue,
+    -4px 0 5px lightblue;
+
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+}
+
+.editorCardsView {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  border: 2px dashed green;
+}
