@@ -28,10 +28,9 @@ export const HoverPane = ({ handleClose, children }: {
   children: ReactNode
 }) => {
   return (
-    <div className={styles.hoverBackground} onClick={handleClose}>
-      <div className={styles.hoverPane}>
-        {children}
-      </div>
+    <div className={styles.hoverMain}>
+      <div className={styles.hoverBackground} onClick={handleClose}></div>
+      <div className={styles.hoverPane}>{children}</div>
     </div>
   );
 }

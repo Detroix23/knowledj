@@ -1,5 +1,13 @@
-.hoverBackground {
+.hoverMain {
   position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.hoverBackground {
+  position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
@@ -9,11 +17,9 @@
 }
 
 .hoverPane {
-  position: relative;
+  position: absolute;
   width: 80%;
   height: 80%;
   top: 10%;
   left: 10%;
-
-  background-color: aqua;
 }
