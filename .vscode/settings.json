@@ -6,7 +6,9 @@
     "cSpell.enabled": true,
     "cSpell.language": "en",
     "cSpell.words": [
+      "Katex",
       "knowledj",
       "tauri"
-    ]
+    ],
+    "js/ts.format.semicolons": "insert"
 }

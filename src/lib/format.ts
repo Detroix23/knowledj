@@ -4,6 +4,7 @@
  * 
  * String general formats.
  */
+import React from "react";
 
 /** Fill `input` with `fill` to reach `n` characters. */
 export const leftFill = (input: string, n: number, fill: string): string => (
@@ -29,4 +30,23 @@ export const dateFormal = (date: Date): string => (
   dateYMDFormal(date) + "_" + dateHMSFormal(date)
 );
 
-export default { leftFill, dateYMDFormal, dateHMSFormal, dateFormal };
+/** 
+ * Extract a plain string from children ("", template literal, or single string). 
+ * 
+ * **Warning** : ignore `ReactNodes` by returns an **empty `string`** if one is passed. 
+ */
+export const nodeToString = (children: React.ReactNode): string => {
+  return ( 
+    (typeof children === "string") ? children :
+    (typeof children === "number") ? children.toString() :
+    (Array.isArray(children)) ? children.map(nodeToString).join("") : ""
+  );
+}
+
+export default { 
+  leftFill, 
+  dateYMDFormal, 
+  dateHMSFormal, 
+  dateFormal, 
+  nodeToString, 
+};

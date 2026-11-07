@@ -85,5 +85,5 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![knowledge_load, knowledge_save])
         .run(tauri::generate_context!())
-        .expect("(!) src/lib::run() error while running `Tauri` application.");
+        .expect("(!) src-tauri/src/lib::run() error while running `Tauri` application.");
 }

@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 import { loadKnowledge } from "./lib/knowledge";
 import type { KnowledgeFile } from "./lib/types";
 import { MainMode, mainModeFormat } from "./lib/types";
-import "./ModeSelector";
+
 import { ModeSelector } from "./ModeSelector";
 import { Editor } from "./edition/Editor";
 import { Quiz } from "./quiz/Quiz";
-
+import { KatexRender } from "./common/KatexRender";
 import "./general.css";
 import styles from "./App.module.css";
 
@@ -46,7 +46,7 @@ const App = () => {
       {switchModeUi(modeMain, knowledge)}
 
       <div className={styles.footer}>
-        Foot.
+        <KatexRender>{`\\text{Powered by} \\KaTeX`}</KatexRender>
       </div>
     </main>
   );

@@ -20,7 +20,9 @@ Train thanks to randomly selected question on filtered subjects.
 
 All cards are stored in a human-readable JSON file called `knowledge.json`.
 
-Often located in `~/.local/share/com.detroix23.knowledj/knowledge.json`.
+Often located in :
+- Linux : `$HOME/.local/share/com.detroix23.knowledj/`.
+- Windows : `%APPDATA%\com.detroix23.knowledj\`
 
 ## Development.
 
