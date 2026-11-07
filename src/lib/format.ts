@@ -26,9 +26,7 @@ export const dateHMSFormal = (date: Date): string => [
 ].map(d => leftFill(d.toString(), 2, "0")).join("-");
 
 /** Format a `Date` with no space and file-system compatible characters. */
-export const dateFormal = (date: Date): string => (
-  dateYMDFormal(date) + "_" + dateHMSFormal(date)
-);
+export const dateFormal = (date: Date): string => dateYMDFormal(date) + "_" + dateHMSFormal(date);
 
 /** 
  * Extract a plain string from children ("", template literal, or single string). 

@@ -4,11 +4,20 @@
 }
 
 .addCardMenu {
-  display: inline-block;
+  display: flex;
   width: 100%;
   height: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;  
+  flex-wrap: nowrap;
+  
   padding: 5px;
   border-radius: 6px;
 
   background-color: white;
+}
+
+.buttonGroup {
+  justify-self: flex-end;
 }

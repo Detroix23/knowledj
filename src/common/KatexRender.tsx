@@ -2,7 +2,7 @@
  * # Knowledj frontend.
  * src/common/KatexRender.tsx
  */
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import katex, { KatexOptions } from "katex";
 import { nodeToString } from "../lib/format";
 
@@ -53,19 +53,35 @@ export const KatexRender = ({children, displayMode = false, errorColor, options,
 };
 
 
-export const KatexEditor = ({ displayMode = false, errorColor, options }: {
+type KatexEditorProps = {
+  label: string,
+  input: string,
+  setInput: (input: string) => void,
   /** Render in display mode (centered, larger operators). Default: false. */
-  displayMode?: boolean;
+  displayMode?: boolean,
   /** Error handling: "warn" logs and renders the raw source, "throw" rethrows. */
-  errorColor?: string;
+  errorColor?: string,
   /** Any other KaTeX options (macros, trust, strict, etc.). */
-  options?: KatexOptions;
-}) => {
-  const [ input, setInput ] = useState<string>("");
+  options?: KatexOptions,
+  className?: string
+};
 
+export const KatexEditor = ({ 
+  label, 
+  input, 
+  setInput, 
+  displayMode = false, 
+  errorColor, 
+  options, 
+  className 
+}: KatexEditorProps) => {
+  const labelId: string = `katexEditor-id${label}`;
   return (
-    <div>
-      <textarea 
+    <div className={className}>
+      <label htmlFor={labelId}>{label}</label>
+      <br />
+      <textarea
+        id={labelId} 
         value={input}
         onChange={area => setInput(area.target.value)}
       />

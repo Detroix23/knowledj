@@ -23,9 +23,9 @@ import styles from "./HoverPane.module.css"
  * </HoverPane>    
  * ```
  */
-export const HoverPane = ({ handleClose, children }: { 
+export const HoverPane = ({ children, handleClose }: { 
+  children?: ReactNode
   handleClose: () => void, 
-  children: ReactNode
 }) => {
   return (
     <div className={styles.hoverMain}>
