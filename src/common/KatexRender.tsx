@@ -2,7 +2,7 @@
  * # Knowledj frontend.
  * src/common/KatexRender.tsx
  */
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import katex, { KatexOptions } from "katex";
 import { nodeToString } from "../lib/format";
 
@@ -51,3 +51,32 @@ export const KatexRender = ({children, displayMode = false, errorColor, options,
     ></span>
   );
 };
+
+
+export const KatexEditor = ({ displayMode = false, errorColor, options }: {
+  /** Render in display mode (centered, larger operators). Default: false. */
+  displayMode?: boolean;
+  /** Error handling: "warn" logs and renders the raw source, "throw" rethrows. */
+  errorColor?: string;
+  /** Any other KaTeX options (macros, trust, strict, etc.). */
+  options?: KatexOptions;
+}) => {
+  const [ input, setInput ] = useState<string>("");
+
+  return (
+    <div>
+      <textarea 
+        value={input}
+        onChange={area => setInput(area.target.value)}
+      />
+      <br />
+      <KatexRender 
+        displayMode={displayMode}
+        errorColor={errorColor}
+        options={options}  
+      >
+        {input}
+      </KatexRender>
+    </div>
+  );
+}
