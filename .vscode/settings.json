@@ -1,0 +1,12 @@
+{
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+
+    "cSpell.enabled": true,
+    "cSpell.language": "en",
+    "cSpell.words": [
+      "knowledj",
+      "tauri"
+    ]
+}
