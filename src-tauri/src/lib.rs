@@ -8,7 +8,7 @@ use tauri::AppHandle;
 use tauri::Manager;
 
 /// # `Card` object.
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 struct Card {
     id: String,
@@ -19,7 +19,7 @@ struct Card {
 }
 
 /// # `Knowledge` object.
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 struct KnowledgeFile {
     version: u32,
@@ -56,7 +56,6 @@ fn knowledge_create_empty(file_path: &path::PathBuf) -> Result<KnowledgeFile, St
 fn knowledge_load(app: AppHandle) -> Result<KnowledgeFile, String> {
     eprintln!("(?) {}:{} knowledge_load() ran.", file!(), line!());
 
-
     let path: path::PathBuf = knowledge_path(&app)?;
     println!("- {}", path.display());
     if !path.exists() {
@@ -78,12 +77,25 @@ fn knowledge_save(app: AppHandle, knowledge: KnowledgeFile) -> Result<(), String
     fs::write(&path, json).map_err(|e| e.to_string())
 }
 
+/// Add a `card` to `knowledge` and saves the new file.
+#[tauri::command]
+fn knowledge_add(app: AppHandle, card: Card) -> Result<KnowledgeFile, String> {
+  let mut knowledge: KnowledgeFile = knowledge_load(app.clone())?;
+  knowledge.cards.push(card);
+  knowledge_save(app, knowledge.clone())?;
+  Ok(knowledge)
+}
+
 /// Main Tauri run function.
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![knowledge_load, knowledge_save])
+        .invoke_handler(tauri::generate_handler![
+          knowledge_load, 
+          knowledge_save,
+          knowledge_add,
+        ])
         .run(tauri::generate_context!())
         .expect("(!) src-tauri/src/lib::run() error while running `Tauri` application.");
 }

@@ -13,6 +13,14 @@ export interface Card {
   dateUpdated: string;
 };
 
+export const EMPTY_CARD: Card = {
+  id: "",
+  title: "",
+  body: "",
+  dateCreated: "",
+  dateUpdated: "",
+};
+
 /**
  * # `KnowledgeFile` object shared with Rust.
  */

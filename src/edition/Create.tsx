@@ -4,6 +4,8 @@
  */
 import { useState } from "react";
 import type { Card } from "../lib/types";
+import { EMPTY_CARD } from "../lib/types";
+import { addKnowledge } from "../lib/knowledge";
 
 import { HoverPane } from "../common/HoverPane";
 import { KatexEditor } from "../common/KatexRender";
@@ -67,13 +69,7 @@ const AddCardButtons = ({ isSaving, handleSave, handleClose }: {
 const AddCardMenu = ({ setMenuVisibility }: {
   setMenuVisibility: React.Dispatch<React.SetStateAction<boolean>>,
 }) => {
-  const [ card, setCard ] = useState<Card>({
-    id: "",
-    title: "",
-    body: "",
-    dateCreated: "",
-    dateUpdated: "",
-  });
+  const [ card, setCard ] = useState<Card>(EMPTY_CARD);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const setCardTitle = (title: string) => setCard({
     ...card,
@@ -89,41 +85,33 @@ const AddCardMenu = ({ setMenuVisibility }: {
     card.dateCreated = now;
     card.dateUpdated = now;
   };
+  const updateCardId = () => {
+    card.id = crypto.randomUUID();
+  }
 
   /**
    * Handles card creation and persistence.
    * This function simulates calling the Rust backend via an invoke binding 
    * to add the card to the knowledge file.
    */
-  const isMinimumCompleted = () => !card.title.trim() || !card.body.trim()
+  const isComplete = () => card.title.trim() && card.body.trim()
   const handleClose = () => setMenuVisibility(false);
   const handleSave = async () => {
-    if (isMinimumCompleted()) {
-      alert("Title and Body are required.");
+    if (!isComplete()) {
+      alert("(?) Create new card - title and body are required.");
       return;
     }
+    updateCardId();
     updateCardTimeStamps();
     setIsSaving(true);
     
-    // In a real application, this would use Tauri's invoke binding from src/lib/knowledge.ts
-    // Example: save_card(card);
-    
     console.log("(?) Attempting to save card : ");
     console.log(card);
+    addKnowledge(card);
 
-    // Simulate a successful save for now
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setIsSaving(false);
-    
-    // Close the menu and reset form
+    setIsSaving(false);    
     setMenuVisibility(false);
-    setCard({
-      id: "",
-      title: "",
-      body: "",
-      dateCreated: "",
-      dateUpdated: "",
-    });
+    setCard(EMPTY_CARD);
   };
 
   return (
