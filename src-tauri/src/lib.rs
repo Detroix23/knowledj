@@ -8,7 +8,7 @@ use tauri::AppHandle;
 use tauri::Manager;
 
 /// # `Card` object.
-#[derive(serde::Serialize, serde::Deserialize, Clone)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 struct Card {
     id: String,
@@ -86,6 +86,20 @@ fn knowledge_add(app: AppHandle, card: Card) -> Result<KnowledgeFile, String> {
   Ok(knowledge)
 }
 
+#[tauri::command]
+fn knowledge_remove(app: AppHandle, card: Card) -> Result<KnowledgeFile, String> {
+  let mut knowledge: KnowledgeFile = knowledge_load(app.clone())?;
+  match knowledge.cards.iter().position(|c: &Card| *c == card) {
+    None => eprintln!("(!) {}:{} knowledge_remove() Can't find card to be removed.", file!(), line!()),
+    Some(index) => { 
+      println!("(?) {}:{} knowledge_remove() Removing card at index i={}", file!(), line!(), index);
+      knowledge.cards.swap_remove(index); 
+    }
+  };
+  knowledge_save(app, knowledge.clone())?;
+  Ok(knowledge)
+}
+
 /// Main Tauri run function.
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -95,6 +109,7 @@ pub fn run() {
           knowledge_load, 
           knowledge_save,
           knowledge_add,
+          knowledge_remove,
         ])
         .run(tauri::generate_context!())
         .expect("(!) src-tauri/src/lib::run() error while running `Tauri` application.");
