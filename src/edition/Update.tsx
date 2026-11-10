@@ -17,8 +17,9 @@ export const Update = ({ card, handleClose }: {
   const handleRemove = () => {
     console.log("(?) Removing card : ", card);
     removeKnowledge(card);
+    handleClose();
   };
-
+  
   return (
     <HoverPane handleClose={handleClose}>
       <div className={styles.updateMain}>

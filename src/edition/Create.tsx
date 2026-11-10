@@ -5,13 +5,14 @@
 import { useState } from "react";
 import type { Card } from "../lib/types";
 import { EMPTY_CARD } from "../lib/types";
-import { addKnowledge } from "../lib/knowledge";
 
 import { HoverPane } from "../common/HoverPane";
 import { KatexEditor } from "../common/KatexRender";
 import styles from "./Create.module.css";
 
-export const AddCardButton = () => {
+export const AddCardButton = ({ addKnowledge }: {
+  addKnowledge: (card: Card) => void
+}) => {
   const [ isMenuVisible, setMenuVisibility ] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -24,11 +25,13 @@ export const AddCardButton = () => {
       <button className={styles.editorAddCardButton} onClick={handleClick}> 
           + 
       </button>
-      {isMenuVisible ? <AddCardMenu setMenuVisibility={setMenuVisibility} /> : null}
+      {isMenuVisible ? <AddCardMenu 
+        setMenuVisibility={setMenuVisibility} 
+        addKnowledge={addKnowledge}
+      /> : null}
     </>
   );
 }
-
 
 const AddCardTitle = ({ title, setCardTitle }: {
   title: string,
@@ -66,11 +69,12 @@ const AddCardButtons = ({ isSaving, handleSave, handleClose }: {
   </div>
 )
 
-const AddCardMenu = ({ setMenuVisibility }: {
+const AddCardMenu = ({ setMenuVisibility, addKnowledge }: {
   setMenuVisibility: React.Dispatch<React.SetStateAction<boolean>>,
+  addKnowledge: (card: Card) => void,
 }) => {
   const [ card, setCard ] = useState<Card>(EMPTY_CARD);
-  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [ isSaving, setIsSaving ] = useState<boolean>(false);
   const setCardTitle = (title: string) => setCard({
     ...card,
     title: title,
@@ -82,7 +86,7 @@ const AddCardMenu = ({ setMenuVisibility }: {
   const updateCardTimeStamps = () => {
     const now = new Date().toUTCString();
     console.log(`(?) Timestamp: "${now}".`);
-    card.dateCreated = now;
+    card.dateCreated = now;handleSave
     card.dateUpdated = now;
   };
   const updateCardId = () => {
@@ -110,10 +114,10 @@ const AddCardMenu = ({ setMenuVisibility }: {
     addKnowledge(card);
 
     setIsSaving(false);    
-    setMenuVisibility(false);
+    handleClose();
     setCard(EMPTY_CARD);
   };
-
+  
   return (
     <HoverPane handleClose={handleClose}>
       <form className={styles.addCardMenu}>

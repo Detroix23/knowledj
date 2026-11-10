@@ -4,8 +4,8 @@
  */
 import { useEffect, useState } from "react";
 
-import { loadKnowledge } from "./lib/knowledge";
-import type { KnowledgeFile } from "./lib/types";
+import { loadKnowledge, addKnowledge, removeKnowledge } from "./lib/knowledge";
+import type { Card, KnowledgeFile } from "./lib/types";
 import { MainMode, mainModeFormat } from "./lib/types";
 
 import { ModeSelector } from "./ModeSelector";
@@ -16,8 +16,8 @@ import "./general.css";
 import styles from "./App.module.css";
 
 const App = () => {
-  const [knowledge, setKnowledge] = useState<KnowledgeFile | null>(null);
-  const [modeMain, setModeMain] = useState<MainMode>(MainMode.QUIZ);
+  const [ knowledge, setKnowledge ] = useState<KnowledgeFile | null>(null);
+  const [ modeMain, setModeMain ] = useState<MainMode>(MainMode.QUIZ);
 
   useEffect(() => {
     loadKnowledge()
@@ -27,7 +27,10 @@ const App = () => {
 
   const switchModeUi = (mode: MainMode, knowledge: KnowledgeFile | null) => {
     switch (mode) {
-      case MainMode.EDITION: return <Editor knowledge={knowledge} />
+      case MainMode.EDITION: return <Editor 
+        knowledge={knowledge} 
+        addKnowledge={async (card: Card) => setKnowledge(await addKnowledge(card))} 
+      />
       case MainMode.QUIZ: return <Quiz />
     }
   };
