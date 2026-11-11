@@ -12,8 +12,9 @@ import styles from "./View.module.css";
 import { Update } from "./Update";
 
 /** Preview 1 card. */
-const CardPreview = ({ card }: { 
+const CardPreview = ({ card, removeKnowledge }: { 
   card: Card,
+  removeKnowledge: (card: Card) => void,
 }) => {
   const [ isUpdateVisible, setUpdateVisibility ] = useState<boolean>(false);
 
@@ -34,17 +35,26 @@ const CardPreview = ({ card }: {
           <span>{format.dateFormal(dateUpdated)}</span>
         </div>
       </div>
-      {isUpdateVisible ? <Update card={card} handleClose={handleCloseUpdate} /> : null}
+      {isUpdateVisible ? <Update 
+        card={card} 
+        handleClose={handleCloseUpdate} 
+        removeKnowledge={removeKnowledge}
+      /> : null}
     </>
   );
 }
 
 /** Display all the cards using `CardPreview`. */
-export const CardsView = ({ knowledge }: { 
+export const CardsView = ({ knowledge, removeKnowledge }: { 
   knowledge: KnowledgeFile | null,
+  removeKnowledge: (card: Card) => void,
 }) => {
   const mapCards = () => knowledge?.cards.map((card: Card, index: number) => (
-    <CardPreview key={index.toString()} card={card} />
+    <CardPreview 
+      key={index.toString()} 
+      card={card}
+      removeKnowledge={removeKnowledge} 
+    />
   ));
 
   return (

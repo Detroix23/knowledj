@@ -30,6 +30,7 @@ const App = () => {
       case MainMode.EDITION: return <Editor 
         knowledge={knowledge} 
         addKnowledge={async (card: Card) => setKnowledge(await addKnowledge(card))} 
+        removeKnowledge={async (card: Card) => setKnowledge(await removeKnowledge(card))}
       />
       case MainMode.QUIZ: return <Quiz />
     }

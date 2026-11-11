@@ -2,7 +2,7 @@
  * # Knowledj frontend.
  * src/common/KatexRender.tsx
  */
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import katex, { KatexOptions } from "katex";
 import { nodeToString } from "../lib/format";
 
@@ -54,7 +54,7 @@ export const KatexRender = ({children, displayMode = false, errorColor, options,
 
 
 type KatexEditorProps = {
-  label: string,
+  label: ReactNode,
   input: string,
   setInput: (input: string) => void,
   /** Render in display mode (centered, larger operators). Default: false. */
@@ -63,7 +63,9 @@ type KatexEditorProps = {
   errorColor?: string,
   /** Any other KaTeX options (macros, trust, strict, etc.). */
   options?: KatexOptions,
-  className?: string
+  className?: string,
+  classInput?: string,
+  classRender?: string,
 };
 
 export const KatexEditor = ({ 
@@ -73,7 +75,9 @@ export const KatexEditor = ({
   displayMode = false, 
   errorColor, 
   options, 
-  className 
+  className,
+  classInput,
+  classRender,
 }: KatexEditorProps) => {
   const labelId: string = `katexEditor-id${label}`;
   return (
@@ -84,12 +88,15 @@ export const KatexEditor = ({
         id={labelId} 
         value={input}
         onChange={area => setInput(area.target.value)}
+        className={classInput}
+        placeholder="LaTeX supported."
       />
       <br />
       <KatexRender 
         displayMode={displayMode}
         errorColor={errorColor}
-        options={options}  
+        options={options} 
+        className={classRender}
       >
         {input}
       </KatexRender>

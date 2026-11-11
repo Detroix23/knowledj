@@ -12,7 +12,7 @@ import type { Card, KnowledgeFile } from "./types";
  * 
  * Load the `KnowledgeFile`. 
  */
-export const loadKnowledge = () => 
+export const loadKnowledge = async (): Promise<KnowledgeFile> => 
   invoke<KnowledgeFile>("knowledge_load");
 
 /** 
@@ -20,7 +20,7 @@ export const loadKnowledge = () =>
  * 
  * Save to file the `knowledge`.
  */
-export const saveKnowledge = (file: KnowledgeFile) => 
+export const saveKnowledge = async (file: KnowledgeFile): Promise<void> => 
   invoke<void>("knowledge_save", { file });
 
 /**
@@ -28,8 +28,8 @@ export const saveKnowledge = (file: KnowledgeFile) =>
  * 
  * Add a `card` to `knowledge` and saves the new file
  */
-export const addKnowledge = (card: Card) => 
+export const addKnowledge = async (card: Card): Promise<KnowledgeFile> => 
   invoke<KnowledgeFile>("knowledge_add", { card });
 
-export const removeKnowledge = (card: Card) => 
+export const removeKnowledge = async (card: Card): Promise<KnowledgeFile> => 
   invoke<KnowledgeFile>("knowledge_remove", { card });

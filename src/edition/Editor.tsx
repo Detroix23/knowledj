@@ -30,15 +30,16 @@ const ActionBar = ({ knowledge, addKnowledge }: {
 /**
  * `Editor` main parent component. 
  */
-export const Editor = ({ knowledge, addKnowledge }: { 
+export const Editor = ({ knowledge, addKnowledge, removeKnowledge }: { 
   knowledge: KnowledgeFile | null,
   addKnowledge: (card: Card) => void,
+  removeKnowledge: (card: Card) => void,
 }) => {
   return (
     <div className={styles.editorMain}>
       <h2>Editor</h2>
       <ActionBar knowledge={knowledge} addKnowledge={addKnowledge} />
-      <CardsView knowledge={knowledge} />
+      <CardsView knowledge={knowledge} removeKnowledge={removeKnowledge} />
     </div>
   );
 };

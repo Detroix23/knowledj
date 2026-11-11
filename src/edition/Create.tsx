@@ -38,13 +38,13 @@ const AddCardTitle = ({ title, setCardTitle }: {
   setCardTitle: (title: string) => void,
 }) => (
   <div className={styles.formGroup}>
-    <label htmlFor="cardTitle">Title :</label>
+    <label htmlFor="cardTitle">Title <span className={styles.inputMandatory}>*</span></label>
     <br />
     <input 
       id="cardTitle" 
       value={title} 
       onChange={input => setCardTitle(input.target.value)} 
-      className={styles.input} 
+      className={styles.inputTitle} 
       placeholder="Enter question here..."
     />
   </div>
@@ -129,9 +129,10 @@ const AddCardMenu = ({ setMenuVisibility, addKnowledge }: {
         />
         
         <KatexEditor 
-          label="Body : "
+          label={<span>Body <span className={styles.inputMandatory}>*</span></span>}
           input={card.body}
           setInput={setCardBody}
+          classInput={styles.inputBody}
         />
 
         <AddCardButtons 
