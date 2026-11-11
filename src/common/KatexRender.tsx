@@ -6,6 +6,8 @@ import { ReactNode, useMemo } from "react";
 import katex, { KatexOptions } from "katex";
 import { nodeToString } from "../lib/format";
 
+import styles from "./KatexRender.module.css";
+
 /**
  * Renders LaTeX using KaTeX.
  * 
@@ -46,7 +48,7 @@ export const KatexRender = ({children, displayMode = false, errorColor, options,
 
   return (
     <span 
-      className={className}  
+      className={`${styles.render} ${className ?? ""}`}  
       dangerouslySetInnerHTML={{__html: html}}
     ></span>
   );
@@ -57,11 +59,8 @@ type KatexEditorProps = {
   label: ReactNode,
   input: string,
   setInput: (input: string) => void,
-  /** Render in display mode (centered, larger operators). Default: false. */
   displayMode?: boolean,
-  /** Error handling: "warn" logs and renders the raw source, "throw" rethrows. */
   errorColor?: string,
-  /** Any other KaTeX options (macros, trust, strict, etc.). */
   options?: KatexOptions,
   className?: string,
   classInput?: string,
@@ -70,10 +69,15 @@ type KatexEditorProps = {
 
 export const KatexEditor = ({ 
   label, 
+  /** Input typed in the `textarea` body. */
   input, 
+  /** Set `input` on change. */
   setInput, 
+  /** Render in display mode (centered, larger operators). Default: false. */
   displayMode = false, 
+  /** Error handling: "warn" logs and renders the raw source, "throw" rethrows. */
   errorColor, 
+  /** Any other KaTeX options (macros, trust, strict, etc.). */
   options, 
   className,
   classInput,

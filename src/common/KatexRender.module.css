@@ -1,0 +1,7 @@
+.render {
+  display: block;
+  max-width: 100%;
+  /* fallback when a chunk is wider than the box */
+  overflow-x: auto; 
+  overflow-y: auto;
+}
